@@ -1,0 +1,226 @@
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>MailSym</title>
+	<link rel="stylesheet" href="css.css">
+</head>
+<body>
+	<h1>MailSym</h1>
+	<input type="submit" value="Configurações" onclick="toggleSettings()">
+	<input type="submit" value="Iniciar simulação" onclick="run()">
+	<input type="submit" value="Parar simulação" onclick="stop()">
+	<input type="submit" value="Passo a passo" onclick="stepByStep()">
+
+	<div id="settings">
+
+		<div id="traffic_volume">
+			<h3>&nbsp Volume de tráfego </h3>
+			</p>&nbsp LL:
+			<input type="text" id="ll"></input>
+			</p>&nbsp LR:
+			<input type="text" id="lr"></input>
+			</p>&nbsp RL:
+			<input type="text" id="rl"></input>
+			</p>&nbsp RR:
+			<input type="text" id="rr"></input>
+			</p>
+		</div>
+
+		<div id="probabilities_proportion">			
+			<h3>&nbsp Proporções de probabilidade </h3>
+			</p> &nbsp &nbsp&nbsp&nbsp&nbsp&nbsp&nbspSucesso&nbsp&nbsp&nbspFracasso&nbsp&nbsp Adiamento
+			</p>&nbsp LL:
+			<input type="text" id="ll_success" style="width: 100px"></input>
+			<input type="text" id="ll_failure" style="width: 100px"></input>
+			<input type="text" id="ll_delay" style="width: 100px"></input>
+			</p>&nbsp LR:
+			<input type="text" id="lr_success" style="width: 100px"></input>
+			<input type="text" id="lr_failure" style="width: 100px"></input>
+			<input type="text" id="lr_delay" style="width: 100px"></input>
+			</p>&nbsp RL:
+			<input type="text" id="rl_success" style="width: 100px"></input>
+			<input type="text" id="rl_failure" style="width: 100px"></input>
+			<input type="text" id="rl_delay" style="width: 100px"></input>
+			</p>&nbsp RR:
+			<input type="text" id="rr_success" style="width: 100px"></input>
+			<input type="text" id="rr_failure" style="width: 100px"></input>
+			<input type="text" id="rr_delay" style="width: 100px"></input>
+			</p>
+		</div>
+
+		<div id="tec">
+		<h3>&nbsp Tempo entre chegadas (seg.) </h3>
+			</p>&nbsp Local:&nbsp
+			<select id="tec_local_ftype">
+				<option value="expo">EXPO</option>
+			</select>
+			<input type="text" class="fparam" id="tec_local_fparam_1">  </input>
+			</p>
+			</p>&nbsp Remoto:
+			<select id="tec_remote_ftype">
+				<option value="expo">EXPO</option>
+			</select>
+			<input type="text" class="fparam" id="tec_remote_fparam_1">  </input>
+			</p>
+		</div>
+
+		<div id="tserv">
+			<h3> &nbsp Tempos de serviço </h3>
+			</p> &nbsp &nbsp &nbsp &nbsp Recepção&nbsp Função&nbsp Params...
+			</p> &nbsp LLS: 
+			<input type="text" id="lls_reception" style="width: 95px">  </input>
+			<select id="tserv_lls_ftype">
+				<option value="normal">NORM</option>
+				<option value="triangular">TRIA</option>
+				<option value="uniform">UNIF</option>
+				<option value="constant">CONS</option>
+			</select>
+			<input type="text" class="fparam" id="tserv_lls_fparam_1">  </input>
+			<input type="text" class="fparam" id="tserv_lls_fparam_2">  </input>
+			<input type="text" class="fparam" id="tserv_lls_fparam_3">  </input>
+			</p> &nbsp LLF: 
+			<input type="text" id="llf_reception" style="width: 95px">  </input>
+			<select id="tserv_llf_ftype">
+				<option value="normal">NORM</option>
+				<option value="triangular">TRIA</option>
+				<option value="uniform">UNIF</option>
+				<option value="constant">CONS</option>
+			</select>
+			<input type="text" class="fparam" id="tserv_llf_fparam_1">  </input>
+			<input type="text" class="fparam" id="tserv_llf_fparam_2">  </input>
+			<input type="text" class="fparam" id="tserv_llf_fparam_3">  </input>
+			</p> &nbsp LLA: 
+			<input type="text" id="lla_reception" style="width: 95px">  </input>
+			<select id="tserv_lla_ftype">
+				<option value="normal">NORM</option>
+				<option value="triangular">TRIA</option>
+				<option value="uniform">UNIF</option>
+				<option value="constant">CONS</option>
+			</select>
+			<input type="text" class="fparam" id="tserv_lla_fparam_1">  </input>
+			<input type="text" class="fparam" id="tserv_lla_fparam_2">  </input>
+			<input type="text" class="fparam" id="tserv_lla_fparam_3">  </input>
+			
+			</p> &nbsp LRS: 
+			<input type="text" id="lrs_reception" style="width: 95px">  </input>
+			<select id="tserv_lrs_ftype">
+				<option value="normal">NORM</option>
+				<option value="triangular">TRIA</option>
+				<option value="uniform">UNIF</option>
+				<option value="constant">CONS</option>
+			</select>
+			<input type="text" class="fparam" id="tserv_lrs_fparam_1">  </input>
+			<input type="text" class="fparam" id="tserv_lrs_fparam_2">  </input>
+			<input type="text" class="fparam" id="tserv_lrs_fparam_3">  </input>
+			</p> &nbsp LRF: 
+			<input type="text" id="lrf_reception" style="width: 95px">  </input>
+			<select id="tserv_lrf_ftype">
+				<option value="normal">NORM</option>
+				<option value="triangular">TRIA</option>
+				<option value="uniform">UNIF</option>
+				<option value="constant">CONS</option>
+			</select>
+			<input type="text" class="fparam" id="tserv_lrf_fparam_1">  </input>
+			<input type="text" class="fparam" id="tserv_lrf_fparam_2">  </input>
+			<input type="text" class="fparam" id="tserv_lrf_fparam_3">  </input>
+			</p> &nbsp LRA: 
+			<input type="text" id="lra_reception" style="width: 95px">  </input>
+			<select id="tserv_lra_ftype">
+				<option value="normal">NORM</option>
+				<option value="triangular">TRIA</option>
+				<option value="uniform">UNIF</option>
+				<option value="constant">CONS</option>
+			</select>
+			<input type="text" class="fparam" id="tserv_lra_fparam_1">  </input>
+			<input type="text" class="fparam" id="tserv_lra_fparam_2">  </input>
+			<input type="text" class="fparam" id="tserv_lra_fparam_3">  </input>
+
+			</p> &nbsp RLS: 
+			<input type="text" id="rls_reception" style="width: 95px">  </input>
+			<select id="tserv_rls_ftype">
+				<option value="normal">NORM</option>
+				<option value="triangular">TRIA</option>
+				<option value="uniform">UNIF</option>
+				<option value="constant">CONS</option>
+			</select>
+			<input type="text" class="fparam" id="tserv_rls_fparam_1">  </input>
+			<input type="text" class="fparam" id="tserv_rls_fparam_2">  </input>
+			<input type="text" class="fparam" id="tserv_rls_fparam_3">  </input>
+			</p> &nbsp RLF: 
+			<input type="text" id="rlf_reception" style="width: 95px">  </input>
+			<select id="tserv_rlf_ftype">
+				<option value="normal">NORM</option>
+				<option value="triangular">TRIA</option>
+				<option value="uniform">UNIF</option>
+				<option value="constant">CONS</option>
+			</select>
+			<input type="text" class="fparam" id="tserv_rlf_fparam_1">  </input>
+			<input type="text" class="fparam" id="tserv_rlf_fparam_2">  </input>
+			<input type="text" class="fparam" id="tserv_rlf_fparam_3">  </input>
+			</p> &nbsp RLA: 
+			<input type="text" id="rla_reception" style="width: 95px">  </input>
+			<select id="tserv_rla_ftype">
+				<option value="normal">NORM</option>
+				<option value="triangular">TRIA</option>
+				<option value="uniform">UNIF</option>
+				<option value="constant">CONS</option>
+			</select>
+			<input type="text" class="fparam" id="tserv_rla_fparam_1">  </input>
+			<input type="text" class="fparam" id="tserv_rla_fparam_2">  </input>
+			<input type="text" class="fparam" id="tserv_rla_fparam_3">  </input>
+
+			</p> &nbsp RRS: 
+			<input type="text" id="rrs_reception" style="width: 95px">  </input>
+			<select id="tserv_rrs_ftype">
+				<option value="normal">NORM</option>
+				<option value="triangular">TRIA</option>
+				<option value="uniform">UNIF</option>
+				<option value="constant">CONS</option>
+			</select>
+			<input type="text" class="fparam" id="tserv_rrs_fparam_1">  </input>
+			<input type="text" class="fparam" id="tserv_rrs_fparam_2">  </input>
+			<input type="text" class="fparam" id="tserv_rrs_fparam_3">  </input>
+			</p> &nbsp RRF: 
+			<input type="text" id="rrf_reception" style="width: 95px">  </input>
+			<select id="tserv_rrf_ftype">
+				<option value="normal">NORM</option>
+				<option value="triangular">TRIA</option>
+				<option value="uniform">UNIF</option>
+				<option value="constant">CONS</option>
+			</select>
+			<input type="text" class="fparam" id="tserv_rrf_fparam_1">  </input>
+			<input type="text" class="fparam" id="tserv_rrf_fparam_2">  </input>
+			<input type="text" class="fparam" id="tserv_rrf_fparam_3">  </input>
+			</p> &nbsp RRA: 
+			<input type="text" id="rra_reception" style="width: 95px">  </input>
+			<select id="tserv_rra_ftype">
+				<option value="normal">NORM</option>
+				<option value="triangular">TRIA</option>
+				<option value="uniform">UNIF</option>
+				<option value="constant">CONS</option>
+			</select>
+			<input type="text" class="fparam" id="tserv_rra_fparam_1">  </input>
+			<input type="text" class="fparam" id="tserv_rra_fparam_2">  </input>
+			<input type="text" class="fparam" id="tserv_rra_fparam_3">  </input>
+			</p>			
+		</div>
+
+		<div id="general_config">
+		<h3>&nbsp Configurações gerais </h3>
+			</p>&nbsp Servidores no centro 1:
+			<input type="text" id="count_server_1"> &nbsp </input>
+			</p>
+			</p>&nbsp Servidores no centro 2:
+			<input type="text" id="count_server_2"> &nbsp </input>
+			</p>
+		</div>
+
+		<div id="save_button">
+			<input type="submit" value="Salvar e fechar" onclick="saveSettings()">
+		</div>
+	</div>
+
+	<script type="text/javascript" src="mailsym.js"></script>
+
+</body>
+</html>
