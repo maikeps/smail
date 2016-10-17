@@ -54,6 +54,45 @@ function toggleSettings() {
 	}
 }
 
+function enableFields() {
+	for(key in tserv){
+		str = "tserv_" + key
+
+		id = str + '_ftype'
+
+		idparam1 = str + '_fparam_1'
+		idparam2 = str + '_fparam_2'
+		idparam3 = str + '_fparam_3'
+
+		tservType = document.getElementById(id).value
+
+		document.getElementById(idparam1).disabled = true
+		document.getElementById(idparam2).disabled = true
+		document.getElementById(idparam3).disabled = true
+
+		switch (tservType) {
+			case "constant":
+				document.getElementById(idparam1).disabled = false
+				break
+			case "normal":
+				document.getElementById(idparam1).disabled = false
+				document.getElementById(idparam2).disabled = false
+				break
+			case "uniform":
+				document.getElementById(idparam1).disabled = false
+				document.getElementById(idparam2).disabled = false
+				break
+			case "triangular":
+				document.getElementById(idparam1).disabled = false
+				document.getElementById(idparam2).disabled = false
+				document.getElementById(idparam3).disabled = false
+				break
+			default:
+				break
+		}
+	}
+}
+
 function saveSettings() {
 	document.getElementById('settings').style.visibility = "hidden"
 
@@ -77,7 +116,7 @@ function saveSettings() {
 
 	for(key in prob) {
 		for(key2 in prob[key]) {
-	 		prob[key][key2] = document.getElementById(key2).value
+			prob[key][key2] = document.getElementById(key2).value
 		}
 	}
 }
@@ -106,6 +145,7 @@ function setHTMLDefaultValues() {
 	 		document.getElementById(key2).value = prob[key][key2]
 		}
 	}
+	enableFields();
 }
 
 function run() {
