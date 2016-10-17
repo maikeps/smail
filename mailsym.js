@@ -152,6 +152,10 @@ function run() {
 	alert("run")
 }
 
+function pause() {
+	alert("pause")
+}
+
 function stop() {
 	alert("stop")
 }
