@@ -12,10 +12,20 @@ body {
 	margin-top: 15px;
 	visibility: visible;
 	border-radius: 5px;
-
 }
 
-#traffic_volume, #probabilities_proportion, #tec, #tserv, #general_config {
+#simulation_log {
+	float: right; 
+	width: 800px;
+	height: 600px;
+	overflow-y: scroll;
+	background-color: lightblue; 
+	margin-top: 15px;
+	margin-right: 7px;
+	border-radius: 5px;
+}
+
+#traffic_volume, #probabilities_proportion, #tec, #tserv, #general_config, #log_box, #simulation_info {
 	background-color: gray;
 	border-style: solid;
 	border-radius: 5px;

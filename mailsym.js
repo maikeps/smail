@@ -6,6 +6,7 @@ trafficVolume = {
 }
 
 generalConfig = {
+	"simulation_duration": 500,
 	"count_server_1": 1,
 	"count_server_2": 1
 }
@@ -40,9 +41,7 @@ prob = {
 	"rr": {"rr_success": 0, "rr_failure": 0, "rr_delay": 0}
 }
 
-
-
-setHTMLDefaultValues()
+var status = "STOPPED"
 
 function toggleSettings() {
 	style = document.getElementById('settings').style
@@ -119,6 +118,8 @@ function saveSettings() {
 			prob[key][key2] = document.getElementById(key2).value
 		}
 	}
+
+	simulation.duration = generalConfig["simulation_duration"]
 }
 
 function setHTMLDefaultValues() {
@@ -148,18 +149,96 @@ function setHTMLDefaultValues() {
 	enableFields();
 }
 
-function run() {
-	alert("run")
+function updateSimulationInfo(currentTime) {
+	document.getElementById("timer").innerHTML = currentTime
+	console.log(document.getElementById("timer"))
 }
 
-function pause() {
-	alert("pause")
+function Simulation() {
+
+	this.reset = function() {
+		console.log("reset")
+		this.timer = new Timer()
+		this.duration = generalConfig["simulation_duration"]
+		this.eventQueue = new SortedArray([], null, function (a, b) {
+			return a.startTime - b.startTime;
+        });
+	}
+
+	this.reset()
+	
+	//temp
+	this.eventQueue.push(new Event(0, 50, this.timer))
+	this.eventQueue.push(new Event(55, 60, this.timer))
+
+	this.run = function() {
+		console.log("run") 
+		status = "RUNNING"
+		this.step()
+	}
+
+	this.pause = function() {
+		status = "PAUSED"
+		console.log("pause")
+	}
+
+	this.stop = function() {
+		status = "STOPPED"
+		console.log("stop")
+		this.reset()
+	}
+
+	this.step = function() {
+		var event = this.goToNextEvent()
+		event.run()
+		console.log(this.timer.currentTime)
+		updateSimulationInfo(this.timer.currentTime)
+		console.log("step by step")
+	}
+
+	this.goToNextEvent = function() {
+		var event = this.eventQueue.shift()
+		this.timer.currentTime = event.startTime
+		return event
+	}
 }
 
-function stop() {
-	alert("stop")
+function Timer() {
+	this.currentTime = 0
+
+	this.advanceTime = function(amount) {
+		this.currentTime += amount
+	}
 }
 
-function stepByStep() {
-	alert("step by step")
+function RNG() {
+	this.normal = function(a, b) {
+		//TODO
+	}
+
+	this.exponential = function(a) {
+		return -a * (Math.log(1 - Math.random()));
+	}
+
+	this.constant = function(a) {
+		return a
+	}
+
+	this.triangular = function(a, b, c) {
+		//TODO
+	}
+
+	this.uniform = function(a, b) {
+		return Math.floor(Math.random() * b) + a  
+	}
+}
+
+function Event(startTime, eventDuration, timer) {
+	this.startTime = startTime
+	this.eventDuration = eventDuration
+	this.timer = timer
+
+	this.run = function() {
+		this.timer.currentTime += eventDuration
+	}
 }

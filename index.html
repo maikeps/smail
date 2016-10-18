@@ -3,16 +3,32 @@
 	<meta charset="utf-8">
 	<title>MailSym</title>
 	<link rel="stylesheet" href="css.css">
+
+    <script type="text/javascript" src="js/collections.min.js"></script>
+	<script type="text/javascript" src="mailsym.js"></script>
+	<script type="text/javascript" src="gui.js"></script>
 </head>
 <body>
 	<h1>MailSym</h1>
 	<input type="submit" value="Configurações" onclick="toggleSettings()">
-	<input type="submit" value="Iniciar simulação" onclick="run()">	
-	<input type="submit" value="Pausar simulação" onclick="pause()">
-	<input type="submit" value="Parar simulação" onclick="stop()">
-	<input type="submit" value="Passo a passo" onclick="stepByStep()">
+	<input type="submit" value="Iniciar simulação" onclick="runSimulation()">	
+	<input type="submit" value="Pausar simulação" onclick="pauseSimulation()">
+	<input type="submit" value="Parar simulação" onclick="stopSimulation()">
+	<input type="submit" value="Passo a passo" onclick="stepSimulation()">
 
 	<div id="settings">
+		<div id="general_config">
+		<h3>&nbsp Configurações gerais </h3>
+			</p>&nbsp Tempo de simulação:
+			<input type="number" id="simulation_duration"> &nbsp </input>
+			</p>
+			</p>&nbsp Servidores no centro 1:
+			<input type="number" id="count_server_1"> &nbsp </input>
+			</p>
+			</p>&nbsp Servidores no centro 2:
+			<input type="number" id="count_server_2"> &nbsp </input>
+			</p>
+		</div>
 
 		<div id="traffic_volume">
 			<h3>&nbsp Volume de tráfego </h3>
@@ -206,22 +222,25 @@
 			</p>			
 		</div>
 
-		<div id="general_config">
-		<h3>&nbsp Configurações gerais </h3>
-			</p>&nbsp Servidores no centro 1:
-			<input type="text" id="count_server_1"> &nbsp </input>
-			</p>
-			</p>&nbsp Servidores no centro 2:
-			<input type="text" id="count_server_2"> &nbsp </input>
-			</p>
-		</div>
-
 		<div id="save_button">
 			<input type="submit" value="Salvar e fechar" onclick="saveSettings()">
 		</div>
 	</div>
 
-	<script type="text/javascript" src="mailsym.js"></script>
+	<div id="simulation_log">
+		<div id="simulation_info">
+			Tempo atual: <label id="timer">0</label>
+		</div>
+		<div id="log_box">
+			lalala<p/>lalala<p/>
+		</div>
+	</div>
+
+	<script>
+		setHTMLDefaultValues()
+
+		var simulation = new Simulation()
+	</script>
 
 </body>
 </html>
