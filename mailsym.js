@@ -146,7 +146,7 @@ function setHTMLDefaultValues() {
 	 		document.getElementById(key2).value = prob[key][key2]
 		}
 	}
-	enableFields();
+	enableFields()
 }
 
 function updateSimulationInfo(currentTime) {
@@ -160,21 +160,53 @@ function Simulation() {
 		console.log("reset")
 		this.timer = new Timer()
 		this.duration = generalConfig["simulation_duration"]
-		this.eventQueue = new SortedArray([], null, function (a, b) {
-			return a.startTime - b.startTime;
-        });
+		// this.queue = new SortedArray([], null, function (a, b) {
+		// 	return a.creationTime - b.creationTime
+  		// })
 	}
 
 	this.reset()
-	
-	//temp
-	this.eventQueue.push(new Event(0, 50, this.timer))
-	this.eventQueue.push(new Event(55, 60, this.timer))
+	this.rng = new RNG()
+	this.localFactory = new MessageFactory(this.rng.exponential, tec["tec_local_fparam_1"])
+	this.remoteFactory = new MessageFactory(this.rng.exponential, tec["tec_remote_fparam_1"])
+
+	this.receptionCenter = new ReceptionCenter()
+
+	this.serviceCenter1 = new ServiceCenter()
+	this.serviceCenter2 = new ServiceCenter()
+
+	this.messageQueue = new SortedArray([], null, function (a, b) {
+		return a.creationTime - b.creationTime
+	})
+
+	this.eventQueue = new SortedArray([], null, function (a, b) {
+		return a.time - b.time
+	})
+
 
 	this.run = function() {
-		console.log("run") 
-		status = "RUNNING"
-		this.step()
+		// console.log("run")
+		// status = "RUNNING"
+		// this.step()
+
+		l = this.localFactory.getNextMessage()
+		r = this.remoteFactory.getNextMessage()
+		this.messageQueue.push(l)
+		this.messageQueue.push(r)
+
+		nextMessage = this.messageQueue.shift()
+		 // TODO?
+
+
+
+		if(nextMessage.type == "ll" || nextMessage.type == "lr") {
+			this.messageQueue.push(this.localFactory.getNextMessage())
+		} else {
+			this.messageQueue.push(this.remoteFactory.getNextMessage())
+		}
+		// this.timer.advance(nextMessage.creationTime) TODO
+		this.eventQueue.push(new Event(nextMessage.currentTime))
+		this.receptionCenter.receive(nextMessage)
 	}
 
 	this.pause = function() {
@@ -196,6 +228,8 @@ function Simulation() {
 		console.log("step by step")
 	}
 
+
+
 	this.goToNextEvent = function() {
 		var event = this.eventQueue.shift()
 		this.timer.currentTime = event.startTime
@@ -203,10 +237,12 @@ function Simulation() {
 	}
 }
 
+function ServiceCenter() {}
+
 function Timer() {
 	this.currentTime = 0
 
-	this.advanceTime = function(amount) {
+	this.advance = function(amount) {
 		this.currentTime += amount
 	}
 }
@@ -217,7 +253,7 @@ function RNG() {
 	}
 
 	this.exponential = function(a) {
-		return -a * (Math.log(1 - Math.random()));
+		return -a * (Math.log(1 - Math.random()))
 	}
 
 	this.constant = function(a) {
@@ -229,16 +265,55 @@ function RNG() {
 	}
 
 	this.uniform = function(a, b) {
-		return Math.floor(Math.random() * b) + a  
+		return Math.floor(Math.random() * b) + a
 	}
 }
 
-function Event(startTime, eventDuration, timer) {
-	this.startTime = startTime
-	this.eventDuration = eventDuration
-	this.timer = timer
+function Event(time) {
+	this.time = time
 
-	this.run = function() {
-		this.timer.currentTime += eventDuration
+}
+
+function Message(creationTime, type) {
+	this.creationTime = creationTime
+	this.type = type
+}
+
+function MessageFactory(generatorFunction, type) {
+	this.lastCreation = 0
+	this.generatorFunction = generatorFunction
+	this.type = type
+
+
+	this.getNextMessage = function() {
+			console.log(this.generatorFunction)
+		if(type == "l") {
+			creationTime = this.generatorFunction(tec["tec_local_fparam_1"]) + this.lastCreation
+			messageType = (Math.random() * 100 < trafficVolume["ll"]) ? "ll" : "lr"
+			this.lastCreation = creationTime;
+			return new Message(creationTime, messageType)
+		} else {
+			creationTime = this.generatorFunction(tec["tec_remote_fparam_1"]) + this.lastCreation
+			messageType = (Math.random() * 100 < trafficVolume["rl"]) ? "rl" : "rr"
+			this.lastCreation = creationTime
+			return new Message(creationTime, messageType)
+		}
+	}
+}
+
+function ReceptionCenter() {
+
+	this.receive = function(message) {
+
+	}
+
+	this.run = function(message) {
+		this.seize()
+		this.delay()
+		this.release()
+	}
+
+	this.log = function() {
+
 	}
 }

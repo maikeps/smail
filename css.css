@@ -7,7 +7,8 @@ body {
 #settings {
 	height: 600px;
 	overflow-y: scroll;
-	position: fixed; 
+	
+	float: right;
 	background-color: lightblue; 
 	margin-top: 15px;
 	visibility: visible;
@@ -15,7 +16,7 @@ body {
 }
 
 #simulation_log {
-	float: right; 
+	float: left; 
 	width: 800px;
 	height: 600px;
 	overflow-y: scroll;
@@ -23,6 +24,7 @@ body {
 	margin-top: 15px;
 	margin-right: 7px;
 	border-radius: 5px;
+	position: fixed;
 }
 
 #traffic_volume, #probabilities_proportion, #tec, #tserv, #general_config, #log_box, #simulation_info {
