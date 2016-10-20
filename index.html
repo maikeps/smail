@@ -17,16 +17,20 @@
 	<input type="submit" value="Passo a passo" onclick="stepSimulation()">
 
 	<div id="settings">
+		<div id="save_button">
+			<input type="submit" value="Salvar e fechar" onclick="saveSettings()">
+		</div>
+
 		<div id="general_config">
 		<h3>&nbsp Configurações gerais </h3>
 			</p>&nbsp Tempo de simulação:
 			<input type="number" id="simulation_duration"> &nbsp </input>
 			</p>
-			</p>&nbsp Servidores no centro 1:
-			<input type="number" id="count_server_1"> &nbsp </input>
+			</p>&nbsp Servidores no centro local:
+			<input type="number" id="count_server_l"> &nbsp </input>
 			</p>
-			</p>&nbsp Servidores no centro 2:
-			<input type="number" id="count_server_2"> &nbsp </input>
+			</p>&nbsp Servidores no centro remoto:
+			<input type="number" id="count_server_r"> &nbsp </input>
 			</p>
 		</div>
 
@@ -222,17 +226,28 @@
 			</p>			
 		</div>
 
-		<div id="save_button">
-			<input type="submit" value="Salvar e fechar" onclick="saveSettings()">
-		</div>
 	</div>
 
 	<div id="simulation_log">
-		<div id="simulation_info">
-			Tempo atual: <label id="timer">0</label>
+		<div id="general_info">
+			Tempo atual: <label id="timer">0</label><p/>
+			Total de mensagens no sistema: <label id="system_total">0</label><p/>
 		</div>
+		<!-- <div id="simulation_info"> -->
+			<div id="servidor_local">
+				Servidor local: <p/>
+				Mensagens sendo atendidas no servidor local: <label id="msg_count_local">0</label>/<label id="msg_capacity_local">0</label><p/>
+				Mensagens na fila: <label id="local_queue_size">0</label><p/>
+				Total de mensagens atendidas: <label id="total_message_local">0</label>
+			</div>
+			<div id="servidor_remote">
+				Servidor remoto: <p/>
+				Mensagens sendo atendidas no servidor remoto: <label id="msg_count_remote">0</label>/<label id="msg_capacity_remote">0</label><p/>
+				Mensagens na fila: <label id="remote_queue_size">0</label><p/>
+				Total de mensagens atendidas: <label id="total_message_remote">0</label>
+			</div>
+		<!-- </div> -->
 		<div id="log_box">
-			lalala<p/>lalala<p/>
 		</div>
 	</div>
 

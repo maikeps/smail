@@ -27,7 +27,7 @@ body {
 	position: fixed;
 }
 
-#traffic_volume, #probabilities_proportion, #tec, #tserv, #general_config, #log_box, #simulation_info {
+#traffic_volume, #probabilities_proportion, #tec, #tserv, #general_config, #log_box, #servidor_local, #servidor_remote, #general_info {
 	background-color: gray;
 	border-style: solid;
 	border-radius: 5px;
