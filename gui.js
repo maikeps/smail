@@ -21,3 +21,7 @@ function clearSimulation(){
 	simulation.clear()
 	document.getElementById("run_simulation").disabled = false
 }
+
+function saveStatistics() {
+	simulation.saveStatistics()
+}

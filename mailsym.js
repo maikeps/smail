@@ -133,7 +133,6 @@ function saveSettings() {
 	document.getElementById("msg_capacity_remote").innerHTML = generalConfig["count_server_r"]
 
 	simulation.duration = generalConfig["simulation_duration"]
-	console.log(simulation.duration)
 
 	simulation.reset()
 }
@@ -182,8 +181,8 @@ function Simulation() {
 		this.duration = generalConfig["simulation_duration"]*1
 
 		this.rng = new RNG()
-		this.localFactory = new MessageFactory(this.rng.exponential, tec["tec_local_fparam_1"]*1)
-		this.remoteFactory = new MessageFactory(this.rng.exponential, tec["tec_remote_fparam_1"]*1)
+		this.localFactory = new MessageFactory(this.rng.exponential, "l")
+		this.remoteFactory = new MessageFactory(this.rng.exponential, "r")
 
 		this.receptionCenter = new ReceptionCenter()
 
@@ -201,6 +200,21 @@ function Simulation() {
 		this.eventQueue.push(new MessageGenerationEvent(l.creationTime, this.eventQueue, l))
 		this.eventQueue.push(new MessageGenerationEvent(r.creationTime, this.eventQueue, r))
 
+		// Statistics
+		this.receptionCenterOccupationRate = 0
+		this.serviceCenterOccupationRateL = 0
+		this.serviceCenterOccupationRateR = 0
+
+		this.fastestMessageTime = 0
+		this.slowestMessageTime = 0
+		this.totalMessageTime = 0
+		this.averageMessageTime = 0
+
+		this.minimumMessagesConcurrently = 0
+		this.maximumMessagesConcurrently = 0
+		this.averageMessagesConcurrently = 0
+
+		document.getElementById("save_statistics").disabled = true
 	}
 
 	this.reset()
@@ -222,7 +236,22 @@ function Simulation() {
 		nextEvent = this.eventQueue.shift()
 		if(nextEvent == undefined){
 			clearInterval(this.timeout)
+
+			// dividir pelo tempo total da simulação
+			this.serviceCenterOccupationRateL /= this.timer.currentTime
+			this.serviceCenterOccupationRateR /= this.timer.currentTime
+			this.averageMessagesConcurrently /= this.timer.currentTime
+
+			this.averageMessageTime = this.totalMessageTime / this.messageCount
+
+			document.getElementById("save_statistics").disabled = false
 		} else {
+			// servidores ocupados / capacidade do servidor * tempo decorrido entre eventos
+			this.serviceCenterOccupationRateL += this.serviceCenterL.occupiedServers/this.serviceCenterL.capacity * (nextEvent.startTime*1 - this.timer.currentTime)
+			this.serviceCenterOccupationRateR += this.serviceCenterR.occupiedServers/this.serviceCenterR.capacity * (nextEvent.startTime*1 - this.timer.currentTime)
+			// numero de mensagens atualmente no sistema * tempo decorrido entre eventos
+			this.averageMessagesConcurrently += (this.messageCount - this.leaveCount) * (nextEvent.startTime*1 - this.timer.currentTime)
+
 			this.timer.set(nextEvent.startTime*1)
 			this.updateWindow()
 			nextEvent.run()
@@ -251,7 +280,43 @@ function Simulation() {
 		document.getElementById("local_queue_size").innerHTML = "0"
 		document.getElementById("remote_queue_size").innerHTML = "0"
 		document.getElementById("timer").innerHTML = "0"
+	}
 
+	this.saveStatistics = function() {
+		fileContent = "Estatísticas da simulação\n\n"
+
+		fileContent += "Tempo final da simulação: " + this.timer.currentTime + "\n"
+		fileContent += "Total de mensagens no sistema: " + this.messageCount + "\n"
+		fileContent += "Mínimo de mensagens concorrentes no sistema: " + this.minimumMessagesConcurrently + "\n"
+		fileContent += "Máximo de mensagens concorrentes no sistema: " + this.maximumMessagesConcurrently + "\n"
+		fileContent += "Média de mensagens concorrentes no sistema: " + this.averageMessagesConcurrently + "\n"
+
+		fileContent += "\nEstatísticas do centro de serviço local:\n"
+		fileContent += "Total de mensagens atendidas: " + this.serviceCenterL.messageCount + "\n"
+		fileContent += "Taxa média de ocupação dos servidores: " + this.serviceCenterOccupationRateL*100 + "%\n"
+
+		fileContent += "\nEstatísticas do centro de serviço remoto:\n"
+		fileContent += "Total de mensagens atendidas: " + this.serviceCenterR.messageCount + "\n"
+		fileContent += "Taxa média de ocupação dos servidores: " + this.serviceCenterOccupationRateR*100 + "%\n"
+		
+		fileContent += "\nEstatísticas das mensagens:\n"
+		fileContent += "Tempo mínimo de transito das mensagens no sistema: " + this.fastestMessageTime + "\n"
+		fileContent += "Tempo máximo de transito das mensagens no sistema: " + this.slowestMessageTime + "\n"
+		fileContent += "Tempo médio de transito das mensagens no sistema: " + this.averageMessageTime + "\n"
+		fileContent += "Total de mensagens do tipo LLS: " + (this.serviceCenterL.messageTypeCount["lls"] + this.serviceCenterR.messageTypeCount["lls"]) + "\n"
+		fileContent += "Total de mensagens do tipo LLF: " + (this.serviceCenterL.messageTypeCount["llf"] + this.serviceCenterR.messageTypeCount["llf"]) + "\n"
+		fileContent += "Total de mensagens do tipo LLA: " + (this.serviceCenterL.messageTypeCount["lla"] + this.serviceCenterR.messageTypeCount["lla"]) + "\n"
+		fileContent += "Total de mensagens do tipo LRS: " + (this.serviceCenterL.messageTypeCount["lrs"] + this.serviceCenterR.messageTypeCount["lrs"]) + "\n"
+		fileContent += "Total de mensagens do tipo LRF: " + (this.serviceCenterL.messageTypeCount["lrf"] + this.serviceCenterR.messageTypeCount["lrf"]) + "\n"
+		fileContent += "Total de mensagens do tipo LRA: " + (this.serviceCenterL.messageTypeCount["lra"] + this.serviceCenterR.messageTypeCount["lra"]) + "\n"
+		fileContent += "Total de mensagens do tipo RLS: " + (this.serviceCenterL.messageTypeCount["rls"] + this.serviceCenterR.messageTypeCount["rls"]) + "\n"
+		fileContent += "Total de mensagens do tipo RLF: " + (this.serviceCenterL.messageTypeCount["rlf"] + this.serviceCenterR.messageTypeCount["rlf"]) + "\n"
+		fileContent += "Total de mensagens do tipo RLA: " + (this.serviceCenterL.messageTypeCount["rla"] + this.serviceCenterR.messageTypeCount["rla"]) + "\n"
+		fileContent += "Total de mensagens do tipo RRS: " + (this.serviceCenterL.messageTypeCount["rrs"] + this.serviceCenterR.messageTypeCount["rrs"]) + "\n"
+		fileContent += "Total de mensagens do tipo RRF: " + (this.serviceCenterL.messageTypeCount["rrf"] + this.serviceCenterR.messageTypeCount["rrf"]) + "\n"
+		fileContent += "Total de mensagens do tipo RRA: " + (this.serviceCenterL.messageTypeCount["rra"] + this.serviceCenterR.messageTypeCount["rra"]) + "\n"
+
+		console.log(fileContent)
 	}
 }
 
@@ -260,6 +325,22 @@ function ServiceCenter(capacity) {
 	this.queue = new Array()
 	this.capacity = capacity
 	this.messageCount = 0
+	this.messageTypeCount = {
+		"lla": 0,
+		"llf": 0,
+		"lls": 0,
+		"lra": 0,
+		"lrf": 0,
+		"lrs": 0,
+		"rla": 0,
+		"rlf": 0,
+		"rls": 0,
+		"rra": 0,
+		"rrf": 0,
+		"rrs": 0
+	}
+
+
 
 	this.pushToQueue = function(event) {
 		this.queue.push(event)
@@ -302,7 +383,7 @@ function RNG() {
 
 		if(0 <= u && u <= ((b-a)/(c-a))) {
 			return a + Math.sqrt(u*((b-a)*(c-a)))
-		} else if (((b-a)/(c-a)) < u < 1) {
+		} else {
 			return c - Math.sqrt((1-u)*(c-b)*(c-a))
 		}
 	}
@@ -333,6 +414,9 @@ function MessageGenerationEvent(startTime, eventQueue, message) {
 				this.eventQueue.push(new MessageGenerationEvent(r.creationTime, this.eventQueue, r))
 			}
 
+			if(simulation.maximumMessagesConcurrently == 0 || simulation.maximumMessagesConcurrently < simulation.messageCount - simulation.leaveCount) {
+				simulation.maximumMessagesConcurrently = simulation.messageCount - simulation.leaveCount
+			}
 
 			document.getElementById("system_total").innerHTML = simulation.messageCount - simulation.leaveCount
 		} 
@@ -426,10 +510,7 @@ function AcquireServiceCenterServerEvent(startTime, eventQueue, message, service
 			args.add(tserv[this.message.type]["tserv_" + this.message.type + "_fparam_3"]*1)
 		}
 
-
-		
 		delay = simulation.rng[functionType].apply(this, args)
-
 		this.eventQueue.push(new LeaveServiceCenterEvent(this.startTime + delay*1, this.eventQueue, this.message, this.serviceCenter))
 	}
 }
@@ -476,6 +557,8 @@ function LeaveServiceCenterEvent(startTime, eventQueue, message, serviceCenter) 
 			htmlElementId = (message.type[1] == "l") ? "local_queue_size" : "remote_queue_size"
 			document.getElementById(htmlElementId).innerHTML = this.serviceCenter.queue.length
 		}
+
+		this.serviceCenter.messageTypeCount[this.message.type]++
 	}
 }
 
@@ -487,6 +570,15 @@ function MessageDisposalEvent(startTime, eventQueue, message) {
 	this.run = function() {
 		simulation.log(startTime + ": Mensagem " + this.message.id + " saiu do sistema.")
 		simulation.leaveCount++
+
+		messageTime = simulation.timer.currentTime - this.message.creationTime
+		if(simulation.fastestMessageTime == 0 || messageTime < simulation.fastestMessageTime) {
+			simulation.fastestMessageTime = messageTime
+		}
+		if(simulation.slowestMessageTime == 0 || messageTime > simulation.slowestMessageTime) {
+			simulation.slowestMessageTime = messageTime	
+		}
+		simulation.totalMessageTime += messageTime
 
 		document.getElementById("system_total").innerHTML = simulation.messageCount - simulation.leaveCount
 		// ...
