@@ -1,0 +1,55 @@
+@charset "utf-8";
+
+body {
+	font-family: andale mono;
+    background-image: url("bg.png");
+    background-color: #cccccc;
+}
+
+
+
+#settings {
+	height: 600px;
+	overflow-y: scroll;
+	
+	float: right;
+	background-color: lightblue; 
+	margin-top: 15px;
+	visibility: visible;
+	border-radius: 5px;
+}
+
+#simulation_log {
+	float: left; 
+	width: 900px;
+	height: 600px;
+	overflow-y: scroll;
+	background-color: lightblue; 
+	margin-top: 15px;
+	margin-right: 7px;
+	border-radius: 5px;
+	position: fixed;
+}
+
+#traffic_volume, #probabilities_proportion, #tec, #tserv, #general_config, #log_box, #servidor_local, #servidor_remote, #general_info {
+	background-color: gray;
+	border-style: solid;
+	border-radius: 5px;
+	border-width: 1px;
+	border-color: black;
+	margin-left: 7px;
+	margin-right: 7px;
+	margin-top: 7px;
+	margin-bottom: 7px;
+}
+
+#save_button {
+	margin-left: 7px;
+	margin-right: 7px;
+	margin-top: 7px;
+	margin-bottom: 7px;
+}
+
+.fparam {
+	width: 50px;
+}

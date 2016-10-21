@@ -1,0 +1,264 @@
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Smail</title>
+	<link rel="stylesheet" href="css.css">
+
+    <script type="text/javascript" src="js/collections.min.js"></script>
+    <script type="text/javascript" src="js/FileSaver.min.js"></script>
+	<script type="text/javascript" src="smail.js"></script>
+	<script type="text/javascript" src="gui.js"></script>
+</head>
+<body>
+	<h1>Smail - Simulador de servidores de email</h1>
+	<input type="submit" value="Configurações" onclick="toggleSettings()">
+	<input id="run_simulation" type="submit" value="Iniciar simulação" onclick="runSimulation()">	
+	<input type="submit" value="Pausar simulação" onclick="pauseSimulation()">
+	<input type="submit" value="Parar simulação" onclick="stopSimulation()">
+	<input type="submit" value="Passo a passo" onclick="stepSimulation()">
+	<input type="submit" value="Parar e limpar" onclick="clearSimulation()">
+	<input id="save_statistics" type="submit" value="Salvar estatísticas" onclick="saveStatistics()" disabled="true">
+
+	<div id="settings">
+		<div id="save_button">
+			<input type="submit" value="Salvar e fechar" onclick="saveSettings()">
+		</div>
+
+		<div id="general_config">
+		<h3>&nbsp Configurações gerais </h3>
+			</p>&nbsp Tempo de simulação:
+			<input type="number" id="simulation_duration"> &nbsp </input>
+			</p>
+			</p>&nbsp Servidores no centro local:
+			<input type="number" id="count_server_l"> &nbsp </input>
+			</p>
+			</p>&nbsp Servidores no centro remoto:
+			<input type="number" id="count_server_r"> &nbsp </input>
+			</p>
+		</div>
+
+		<div id="traffic_volume">
+			<h3>&nbsp Volume de tráfego </h3>
+			</p>&nbsp LL:
+			<input type="text" id="ll"></input>
+			</p>&nbsp LR:
+			<input type="text" id="lr"></input>
+			</p>&nbsp RL:
+			<input type="text" id="rl"></input>
+			</p>&nbsp RR:
+			<input type="text" id="rr"></input>
+			</p>
+		</div>
+
+		<div id="probabilities_proportion">			
+			<h3>&nbsp Proporções de probabilidade </h3>
+			</p> &nbsp &nbsp&nbsp&nbsp&nbsp&nbsp&nbspSucesso&nbsp&nbsp&nbspFracasso&nbsp&nbsp Adiamento
+			</p>&nbsp LL:
+			<input type="text" id="ll_success" style="width: 100px"></input>
+			<input type="text" id="ll_failure" style="width: 100px"></input>
+			<input type="text" id="ll_delay" style="width: 100px"></input>
+			</p>&nbsp LR:
+			<input type="text" id="lr_success" style="width: 100px"></input>
+			<input type="text" id="lr_failure" style="width: 100px"></input>
+			<input type="text" id="lr_delay" style="width: 100px"></input>
+			</p>&nbsp RL:
+			<input type="text" id="rl_success" style="width: 100px"></input>
+			<input type="text" id="rl_failure" style="width: 100px"></input>
+			<input type="text" id="rl_delay" style="width: 100px"></input>
+			</p>&nbsp RR:
+			<input type="text" id="rr_success" style="width: 100px"></input>
+			<input type="text" id="rr_failure" style="width: 100px"></input>
+			<input type="text" id="rr_delay" style="width: 100px"></input>
+			</p>
+		</div>
+
+		<div id="tec">
+		<h3>&nbsp Tempo entre chegadas (seg.) </h3>
+			</p>&nbsp Local:&nbsp
+			<select id="tec_local_ftype">
+				<option value="expo">EXPO</option>
+			</select>
+			<input type="text" class="fparam" id="tec_local_fparam_1">  </input>
+			</p>
+			</p>&nbsp Remoto:
+			<select id="tec_remote_ftype">
+				<option value="expo">EXPO</option>
+			</select>
+			<input type="text" class="fparam" id="tec_remote_fparam_1">  </input>
+			</p>
+		</div>
+
+		<div id="tserv">
+			<h3> &nbsp Tempos de serviço </h3>
+			</p> &nbsp &nbsp &nbsp &nbsp Recepção&nbsp Função&nbsp Params...
+			</p> &nbsp LLS: 
+			<input type="text" id="lls_reception" style="width: 95px">  </input>
+			<select id="tserv_lls_ftype" onchange="enableFields()">
+				<option value="normal">NORM</option>
+				<option value="triangular">TRIA</option>
+				<option value="uniform">UNIF</option>
+				<option value="constant">CONS</option>
+			</select>
+			<input type="number" class="fparam" id="tserv_lls_fparam_1">  </input>
+			<input type="number" class="fparam" id="tserv_lls_fparam_2">  </input>
+			<input type="number" class="fparam" id="tserv_lls_fparam_3">  </input>
+			</p> &nbsp LLF: 
+			<input type="text" id="llf_reception" style="width: 95px">  </input>
+			<select id="tserv_llf_ftype" onchange="enableFields()">
+				<option value="normal">NORM</option>
+				<option value="triangular">TRIA</option>
+				<option value="uniform">UNIF</option>
+				<option value="constant">CONS</option>
+			</select>
+			<input type="number" class="fparam" id="tserv_llf_fparam_1">  </input>
+			<input type="number" class="fparam" id="tserv_llf_fparam_2">  </input>
+			<input type="number" class="fparam" id="tserv_llf_fparam_3">  </input>
+			</p> &nbsp LLA: 
+			<input type="text" id="lla_reception" style="width: 95px">  </input>
+			<select id="tserv_lla_ftype" onchange="enableFields()">
+				<option value="normal">NORM</option>
+				<option value="triangular">TRIA</option>
+				<option value="uniform">UNIF</option>
+				<option value="constant">CONS</option>
+			</select>
+			<input type="number" class="fparam" id="tserv_lla_fparam_1">  </input>
+			<input type="number" class="fparam" id="tserv_lla_fparam_2">  </input>
+			<input type="number" class="fparam" id="tserv_lla_fparam_3">  </input>
+			
+			</p> &nbsp LRS: 
+			<input type="text" id="lrs_reception" style="width: 95px">  </input>
+			<select id="tserv_lrs_ftype" onchange="enableFields()">
+				<option value="normal">NORM</option>
+				<option value="triangular">TRIA</option>
+				<option value="uniform">UNIF</option>
+				<option value="constant">CONS</option>
+			</select>
+			<input type="number" class="fparam" id="tserv_lrs_fparam_1">  </input>
+			<input type="number" class="fparam" id="tserv_lrs_fparam_2">  </input>
+			<input type="number" class="fparam" id="tserv_lrs_fparam_3">  </input>
+			</p> &nbsp LRF: 
+			<input type="text" id="lrf_reception" style="width: 95px">  </input>
+			<select id="tserv_lrf_ftype" onchange="enableFields()">
+				<option value="normal">NORM</option>
+				<option value="triangular">TRIA</option>
+				<option value="uniform">UNIF</option>
+				<option value="constant">CONS</option>
+			</select>
+			<input type="number" class="fparam" id="tserv_lrf_fparam_1">  </input>
+			<input type="number" class="fparam" id="tserv_lrf_fparam_2">  </input>
+			<input type="number" class="fparam" id="tserv_lrf_fparam_3">  </input>
+			</p> &nbsp LRA: 
+			<input type="text" id="lra_reception" style="width: 95px">  </input>
+			<select id="tserv_lra_ftype" onchange="enableFields()">
+				<option value="normal">NORM</option>
+				<option value="triangular">TRIA</option>
+				<option value="uniform">UNIF</option>
+				<option value="constant">CONS</option>
+			</select>
+			<input type="number" class="fparam" id="tserv_lra_fparam_1">  </input>
+			<input type="number" class="fparam" id="tserv_lra_fparam_2">  </input>
+			<input type="number" class="fparam" id="tserv_lra_fparam_3">  </input>
+
+			</p> &nbsp RLS: 
+			<input type="text" id="rls_reception" style="width: 95px">  </input>
+			<select id="tserv_rls_ftype" onchange="enableFields()">
+				<option value="normal">NORM</option>
+				<option value="triangular">TRIA</option>
+				<option value="uniform">UNIF</option>
+				<option value="constant">CONS</option>
+			</select>
+			<input type="number" class="fparam" id="tserv_rls_fparam_1">  </input>
+			<input type="number" class="fparam" id="tserv_rls_fparam_2">  </input>
+			<input type="number" class="fparam" id="tserv_rls_fparam_3">  </input>
+			</p> &nbsp RLF: 
+			<input type="text" id="rlf_reception" style="width: 95px">  </input>
+			<select id="tserv_rlf_ftype" onchange="enableFields()">
+				<option value="normal">NORM</option>
+				<option value="triangular">TRIA</option>
+				<option value="uniform">UNIF</option>
+				<option value="constant">CONS</option>
+			</select>
+			<input type="number" class="fparam" id="tserv_rlf_fparam_1">  </input>
+			<input type="number" class="fparam" id="tserv_rlf_fparam_2">  </input>
+			<input type="number" class="fparam" id="tserv_rlf_fparam_3">  </input>
+			</p> &nbsp RLA: 
+			<input type="text" id="rla_reception" style="width: 95px">  </input>
+			<select id="tserv_rla_ftype" onchange="enableFields()">
+				<option value="normal">NORM</option>
+				<option value="triangular">TRIA</option>
+				<option value="uniform">UNIF</option>
+				<option value="constant">CONS</option>
+			</select>
+			<input type="number" class="fparam" id="tserv_rla_fparam_1">  </input>
+			<input type="number" class="fparam" id="tserv_rla_fparam_2">  </input>
+			<input type="number" class="fparam" id="tserv_rla_fparam_3">  </input>
+
+			</p> &nbsp RRS: 
+			<input type="text" id="rrs_reception" style="width: 95px">  </input>
+			<select id="tserv_rrs_ftype" onchange="enableFields()">
+				<option value="normal">NORM</option>
+				<option value="triangular">TRIA</option>
+				<option value="uniform">UNIF</option>
+				<option value="constant">CONS</option>
+			</select>
+			<input type="number" class="fparam" id="tserv_rrs_fparam_1">  </input>
+			<input type="number" class="fparam" id="tserv_rrs_fparam_2">  </input>
+			<input type="number" class="fparam" id="tserv_rrs_fparam_3">  </input>
+			</p> &nbsp RRF: 
+			<input type="text" id="rrf_reception" style="width: 95px">  </input>
+			<select id="tserv_rrf_ftype" onchange="enableFields()">
+				<option value="normal">NORM</option>
+				<option value="triangular">TRIA</option>
+				<option value="uniform">UNIF</option>
+				<option value="constant">CONS</option>
+			</select>
+			<input type="number" class="fparam" id="tserv_rrf_fparam_1">  </input>
+			<input type="number" class="fparam" id="tserv_rrf_fparam_2">  </input>
+			<input type="number" class="fparam" id="tserv_rrf_fparam_3">  </input>
+			</p> &nbsp RRA: 
+			<input type="text" id="rra_reception" style="width: 95px">  </input>
+			<select id="tserv_rra_ftype" onchange="enableFields()">
+				<option value="normal">NORM</option>
+				<option value="triangular">TRIA</option>
+				<option value="uniform">UNIF</option>
+				<option value="constant">CONS</option>
+			</select>
+			<input type="number" class="fparam" id="tserv_rra_fparam_1">  </input>
+			<input type="number" class="fparam" id="tserv_rra_fparam_2">  </input>
+			<input type="number" class="fparam" id="tserv_rra_fparam_3">  </input>
+			</p>			
+		</div>
+
+	</div>
+
+	<div id="simulation_log">
+		<div id="general_info">
+			Tempo atual: <label id="timer">0</label><p/>
+			Total de mensagens no sistema: <label id="system_total">0</label><p/>
+		</div>
+		<!-- <div id="simulation_info"> -->
+			<div id="servidor_local">
+				Servidor local: <p/>
+				Mensagens sendo atendidas no servidor local: <label id="msg_count_local">0</label>/<label id="msg_capacity_local">0</label><p/>
+				Mensagens na fila: <label id="local_queue_size">0</label><p/>
+				Total de mensagens atendidas: <label id="total_message_local">0</label>
+			</div>
+			<div id="servidor_remote">
+				Servidor remoto: <p/>
+				Mensagens sendo atendidas no servidor remoto: <label id="msg_count_remote">0</label>/<label id="msg_capacity_remote">0</label><p/>
+				Mensagens na fila: <label id="remote_queue_size">0</label><p/>
+				Total de mensagens atendidas: <label id="total_message_remote">0</label>
+			</div>
+		<!-- </div> -->
+		<div id="log_box">
+		</div>
+	</div>
+
+	<script>
+		setHTMLDefaultValues()
+
+		var simulation = new Simulation()
+	</script>
+
+</body>
+</html>
