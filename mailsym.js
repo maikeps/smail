@@ -180,6 +180,8 @@ function Simulation() {
 		this.timer = new Timer()
 		this.duration = generalConfig["simulation_duration"]*1
 
+		this.logQueue = []
+
 		this.rng = new RNG()
 		this.localFactory = new MessageFactory(this.rng.exponential, "l")
 		this.remoteFactory = new MessageFactory(this.rng.exponential, "r")
@@ -264,7 +266,16 @@ function Simulation() {
 	}
 
 	this.log = function(logMessage) {
-		document.getElementById("log_box").innerHTML = logMessage + "<p/>" + document.getElementById("log_box").innerHTML
+		if(simulation.logQueue.length > 50) {
+			simulation.logQueue.shift()
+		}
+		simulation.logQueue.push(logMessage)
+		newLogMsg = ""
+
+		for(i = 0; i < simulation.logQueue.length; i++) {
+			newLogMsg += simulation.logQueue[i] + "<p/>"
+		}
+		document.getElementById("log_box").innerHTML = newLogMsg
 	}
 
 	this.clear = function() {

@@ -21,7 +21,7 @@ body {
 
 #simulation_log {
 	float: left; 
-	width: 800px;
+	width: 1000px;
 	height: 600px;
 	overflow-y: scroll;
 	background-color: lightblue; 
