@@ -2,7 +2,11 @@
 
 body {
 	font-family: andale mono;
+    background-image: url("bg.png");
+    background-color: #cccccc;
 }
+
+
 
 #settings {
 	height: 600px;
