@@ -316,7 +316,8 @@ function Simulation() {
 		fileContent += "Total de mensagens do tipo RRF: " + (this.serviceCenterL.messageTypeCount["rrf"] + this.serviceCenterR.messageTypeCount["rrf"]) + "\n"
 		fileContent += "Total de mensagens do tipo RRA: " + (this.serviceCenterL.messageTypeCount["rra"] + this.serviceCenterR.messageTypeCount["rra"]) + "\n"
 
-		console.log(fileContent)
+		var file = new File([fileContent], "SimulationReport.txt", {type: "text/plain;charset=utf-8"});
+		saveAs(file);
 	}
 }
 
