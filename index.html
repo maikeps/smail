@@ -11,10 +11,11 @@
 <body>
 	<h1>MailSym</h1>
 	<input type="submit" value="Configurações" onclick="toggleSettings()">
-	<input type="submit" value="Iniciar simulação" onclick="runSimulation()">	
+	<input id="run_simulation" type="submit" value="Iniciar simulação" onclick="runSimulation()">	
 	<input type="submit" value="Pausar simulação" onclick="pauseSimulation()">
 	<input type="submit" value="Parar simulação" onclick="stopSimulation()">
 	<input type="submit" value="Passo a passo" onclick="stepSimulation()">
+	<input type="submit" value="Parar e limpar" onclick="clearSimulation()">
 
 	<div id="settings">
 		<div id="save_button">

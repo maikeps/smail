@@ -17,21 +17,21 @@ tec = {
 }
 
 tserv = {
-	"lls": {"lls_reception": 0.12, "tserv_lls_ftype": "constant", "tserv_lls_fparam_1": 1.3, "tserv_lls_fparam_2": 0, "tserv_lls_fparam_3": 0},
-	"llf": {"llf_reception": 0.14, "tserv_llf_ftype": "constant", "tserv_llf_fparam_1": 1.3, "tserv_llf_fparam_2": 0, "tserv_llf_fparam_3": 0},
-	"lla": {"lla_reception": 0.11, "tserv_lla_ftype": "constant", "tserv_lla_fparam_1": 1.3, "tserv_lla_fparam_2": 0, "tserv_lla_fparam_3": 0},
+	"lls": {"lls_reception": 0.12, "tserv_lls_ftype": "normal", "tserv_lls_fparam_1": 0.55, "tserv_lls_fparam_2": 0.05, "tserv_lls_fparam_3": 0},
+	"llf": {"llf_reception": 0.14, "tserv_llf_ftype": "triangular", "tserv_llf_fparam_1": 0.02, "tserv_llf_fparam_2": 0.05, "tserv_llf_fparam_3": 0.12},
+	"lla": {"lla_reception": 0.11, "tserv_lla_ftype": "uniform", "tserv_lla_fparam_1": 0.06, "tserv_lla_fparam_2": 0.15, "tserv_lla_fparam_3": 0},
 	
-	"lrs": {"lrs_reception": 0.12, "tserv_lrs_ftype": "constant", "tserv_lrs_fparam_1": 1.3, "tserv_lrs_fparam_2": 0, "tserv_lrs_fparam_3": 0},
-	"lrf": {"lrf_reception": 0.13, "tserv_lrf_ftype": "constant", "tserv_lrf_fparam_1": 1.3, "tserv_lrf_fparam_2": 0, "tserv_lrf_fparam_3": 0},
-	"lra": {"lra_reception": 0.15, "tserv_lra_ftype": "constant", "tserv_lra_fparam_1": 1.3, "tserv_lra_fparam_2": 0, "tserv_lra_fparam_3": 0},
+	"lrs": {"lrs_reception": 0.12, "tserv_lrs_ftype": "normal", "tserv_lrs_fparam_1": 0.65, "tserv_lrs_fparam_2": 0.04, "tserv_lrs_fparam_3": 0},
+	"lrf": {"lrf_reception": 0.13, "tserv_lrf_ftype": "uniform", "tserv_lrf_fparam_1": 0.16, "tserv_lrf_fparam_2": 0.25, "tserv_lrf_fparam_3": 0},
+	"lra": {"lra_reception": 0.15, "tserv_lra_ftype": "triangular", "tserv_lra_fparam_1": 0.05, "tserv_lra_fparam_2": 0.07, "tserv_lra_fparam_3": 0.10},
 	
-	"rls": {"rls_reception": 0.12, "tserv_rls_ftype": "constant", "tserv_rls_fparam_1": 1.3, "tserv_rls_fparam_2": 0, "tserv_rls_fparam_3": 0},
-	"rlf": {"rlf_reception": 0.14, "tserv_rlf_ftype": "constant", "tserv_rlf_fparam_1": 1.3, "tserv_rlf_fparam_2": 0, "tserv_rlf_fparam_3": 0},
-	"rla": {"rla_reception": 0.11, "tserv_rla_ftype": "constant", "tserv_rla_fparam_1": 1.3, "tserv_rla_fparam_2": 0, "tserv_rla_fparam_3": 0},
+	"rls": {"rls_reception": 0.12, "tserv_rls_ftype": "uniform", "tserv_rls_fparam_1": 0.03, "tserv_rls_fparam_2": 0.11, "tserv_rls_fparam_3": 0},
+	"rlf": {"rlf_reception": 0.14, "tserv_rlf_ftype": "normal", "tserv_rlf_fparam_1": 0.46, "tserv_rlf_fparam_2": 0.05, "tserv_rlf_fparam_3": 0},
+	"rla": {"rla_reception": 0.11, "tserv_rla_ftype": "normal", "tserv_rla_fparam_1": 0.72, "tserv_rla_fparam_2": 0.09, "tserv_rla_fparam_3": 0},
 	
-	"rrs": {"rrs_reception": 0.16, "tserv_rrs_ftype": "constant", "tserv_rrs_fparam_1": 1.3, "tserv_rrs_fparam_2": 0, "tserv_rrs_fparam_3": 0},
-	"rrf": {"rrf_reception": 0.13, "tserv_rrf_ftype": "constant", "tserv_rrf_fparam_1": 1.3, "tserv_rrf_fparam_2": 0, "tserv_rrf_fparam_3": 0},
-	"rra": {"rra_reception": 0.16, "tserv_rra_ftype": "constant", "tserv_rra_fparam_1": 1.3, "tserv_rra_fparam_2": 0, "tserv_rra_fparam_3": 0}
+	"rrs": {"rrs_reception": 0.16, "tserv_rrs_ftype": "uniform", "tserv_rrs_fparam_1": 0.09, "tserv_rrs_fparam_2": 0.18, "tserv_rrs_fparam_3": 0},
+	"rrf": {"rrf_reception": 0.13, "tserv_rrf_ftype": "triangular", "tserv_rrf_fparam_1": 0.08, "tserv_rrf_fparam_2": 0.15, "tserv_rrf_fparam_3": 0.22},
+	"rra": {"rra_reception": 0.16, "tserv_rra_ftype": "normal", "tserv_rra_fparam_1": 0.63, "tserv_rra_fparam_2": 0.04, "tserv_rra_fparam_3": 0}
 }
 
 functionInfo = {
@@ -133,6 +133,7 @@ function saveSettings() {
 	document.getElementById("msg_capacity_remote").innerHTML = generalConfig["count_server_r"]
 
 	simulation.duration = generalConfig["simulation_duration"]
+	console.log(simulation.duration)
 
 	simulation.reset()
 }
@@ -178,11 +179,11 @@ function Simulation() {
 		this.messageId = 1
 
 		this.timer = new Timer()
-		this.duration = generalConfig["simulation_duration"]
+		this.duration = generalConfig["simulation_duration"]*1
 
 		this.rng = new RNG()
-		this.localFactory = new MessageFactory(this.rng.exponential, tec["tec_local_fparam_1"])
-		this.remoteFactory = new MessageFactory(this.rng.exponential, tec["tec_remote_fparam_1"])
+		this.localFactory = new MessageFactory(this.rng.exponential, tec["tec_local_fparam_1"]*1)
+		this.remoteFactory = new MessageFactory(this.rng.exponential, tec["tec_remote_fparam_1"]*1)
 
 		this.receptionCenter = new ReceptionCenter()
 
@@ -190,8 +191,8 @@ function Simulation() {
 			return a.startTime - b.startTime
 		})
 
-		this.serviceCenterL = new ServiceCenter(generalConfig["count_server_l"])
-		this.serviceCenterR = new ServiceCenter(generalConfig["count_server_r"])
+		this.serviceCenterL = new ServiceCenter(generalConfig["count_server_l"]*1)
+		this.serviceCenterR = new ServiceCenter(generalConfig["count_server_r"]*1)
 
 		l = this.localFactory.getNextMessage(this.messageId)
 		this.messageId++
@@ -222,7 +223,7 @@ function Simulation() {
 		if(nextEvent == undefined){
 			clearInterval(this.timeout)
 		} else {
-			this.timer.set(nextEvent.startTime)
+			this.timer.set(nextEvent.startTime*1)
 			this.updateWindow()
 			nextEvent.run()
 		}
@@ -235,6 +236,22 @@ function Simulation() {
 
 	this.log = function(logMessage) {
 		document.getElementById("log_box").innerHTML = logMessage + "<p/>" + document.getElementById("log_box").innerHTML
+	}
+
+	this.clear = function() {
+		clearInterval(this.timeout)
+		this.reset()
+		document.getElementById("log_box").innerHTML = ""
+
+		document.getElementById("msg_count_local").innerHTML = "0"
+		document.getElementById("msg_count_remote").innerHTML = "0"
+		document.getElementById("system_total").innerHTML = "0"
+		document.getElementById("total_message_local").innerHTML = "0"
+		document.getElementById("total_message_remote").innerHTML = "0"
+		document.getElementById("local_queue_size").innerHTML = "0"
+		document.getElementById("remote_queue_size").innerHTML = "0"
+		document.getElementById("timer").innerHTML = "0"
+
 	}
 }
 
@@ -263,8 +280,13 @@ function Timer() {
 }
 
 function RNG() {
-	this.normal = function(a, b) {
-		//TODO
+	this.normal = function(u, o) {
+	    u1 = Math.random();
+	    u2 = Math.random();
+
+	    z = Math.sqrt(-2.0*Math.log(u1))*Math.cos((2.0*3.1415926)*u2);
+	    return (u + o * z);
+		
 	}
 
 	this.exponential = function(a) {
@@ -276,11 +298,17 @@ function RNG() {
 	}
 
 	this.triangular = function(a, b, c) {
-		//TODO
+		u = Math.random()
+
+		if(0 <= u && u <= ((b-a)/(c-a))) {
+			return a + Math.sqrt(u*((b-a)*(c-a)))
+		} else if (((b-a)/(c-a)) < u < 1) {
+			return c - Math.sqrt((1-u)*(c-b)*(c-a))
+		}
 	}
 
 	this.uniform = function(a, b) {
-		return Math.floor(Math.random() * b) + a
+		return a + ((b - a) * Math.random() );
 	}
 }
 
@@ -366,11 +394,6 @@ function EnterServiceCenterEvent(startTime, eventQueue, message, serviceCenter) 
 
 		acquireEvent = new AcquireServiceCenterServerEvent(this.startTime, this.eventQueue, this.message, this.serviceCenter)
 		if(this.serviceCenter.occupiedServers < this.serviceCenter.capacity) {
-			
-
-			// htmlElementId = (message.type[1] == "l") ? "msg_count_local" : "msg_count_remote"
-			// document.getElementById(htmlElementId).innerHTML = this.serviceCenter.occupiedServers
-
 			this.eventQueue.push(acquireEvent)
 		} else {
 			this.serviceCenter.pushToQueue(acquireEvent)
@@ -390,19 +413,21 @@ function AcquireServiceCenterServerEvent(startTime, eventQueue, message, service
 	this.run = function() {
 		simulation.log(startTime + ": Mensagem " + this.message.id + " começou a ser atendida pelo servidor do centro de serviço " + ((message.type[1] == "l") ? "local." : "remoto."))
 		this.serviceCenter.occupiedServers++
-		htmlElementId = (message.type[1] == "l") ? "msg_count_local" : "msg_count_remote"
+		htmlElementId = (this.message.type[1] == "l") ? "msg_count_local" : "msg_count_remote"
 		document.getElementById(htmlElementId).innerHTML = this.serviceCenter.occupiedServers
 
 		
-		functionType = tserv[message.type]["tserv_" + message.type + "_ftype"]
-		args = [tserv[message.type]["tserv_" + message.type + "_fparam_1"]]
+		functionType = tserv[this.message.type]["tserv_" + this.message.type + "_ftype"]
+		args = [tserv[this.message.type]["tserv_" + this.message.type + "_fparam_1"]*1]
 		if(functionInfo[functionType] == 2) {
-			args.append(tserv[message.type]["tserv_" + message.type + "_fparam_2"])
+			args.add(tserv[this.message.type]["tserv_" + this.message.type + "_fparam_2"]*1)
 		} else if(functionInfo[functionType] == 3) {
-			args.append(tserv[message.type]["tserv_" + message.type + "_fparam_2"])
-			args.append(tserv[message.type]["tserv_" + message.type + "_fparam_3"])
+			args.add(tserv[this.message.type]["tserv_" + this.message.type + "_fparam_2"]*1)
+			args.add(tserv[this.message.type]["tserv_" + this.message.type + "_fparam_3"]*1)
 		}
 
+
+		
 		delay = simulation.rng[functionType].apply(this, args)
 
 		this.eventQueue.push(new LeaveServiceCenterEvent(this.startTime + delay*1, this.eventQueue, this.message, this.serviceCenter))
